@@ -30,6 +30,6 @@ const calculateDailyAmount = (numStocks: number, annualBalance: number, startTim
 }
 
 // NOTE: update these values to see proper reuslts
-const { stocks, balance } = parseArgs()
+const { stocks, balance, timestamp } = parseArgs()
 
-writeToFileAsync("./result.txt", calculateDailyAmount(stocks, balance))
+writeToFileAsync("./result.txt", calculateDailyAmount(stocks, balance, timestamp))
