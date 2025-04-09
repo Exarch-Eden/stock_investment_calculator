@@ -7,13 +7,13 @@ import { Stock } from "./types";
  * @returns Array of Stock objects
  * @throws Error if file can't be read or content isn't valid
  */
-const readStocksFromFile = (filePath: string): Stock[] => {
+const readStocksFromFile = (filePath: string): { stocks: Stock[], balance: number, timestamp: number, cadWeight?: number, usdWeight?: number } => {
     try {
         // Read the file as text
         const fileContent = readFileSync(filePath, "utf-8");
 
         // Parse the text content as JSON
-        const parsedStocks = JSON.parse(fileContent);
+        const { stocks: parsedStocks, balance, timestamp, cadWeight, usdWeight } = JSON.parse(fileContent);
 
         // Validate the parsed content is an array
         if (!Array.isArray(parsedStocks)) {
@@ -21,7 +21,7 @@ const readStocksFromFile = (filePath: string): Stock[] => {
         }
 
         // Validate each item in the array conforms to the Stock interface
-        const stocks: Stock[] = parsedStocks.map((stock, index) => {
+        const validatedStocks: Stock[] = parsedStocks.map((stock, index) => {
             if (!stock.ticker || typeof stock.ticker !== "string") {
                 throw new Error(`Stock at index ${index} has invalid ticker`);
             }
@@ -56,7 +56,7 @@ const readStocksFromFile = (filePath: string): Stock[] => {
             };
         });
 
-        return stocks;
+        return { stocks: validatedStocks, balance, timestamp, cadWeight, usdWeight };
     } catch (error) {
         if (error instanceof Error) {
             throw new Error(`Failed to read stocks file: ${error.message}`);
