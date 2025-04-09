@@ -100,9 +100,50 @@ const calculateDailyAmountYieldAndCurrencyWeighted = (
     );
 };
 
+const calculateDailyAmountYieldCurrencyMedianPriceWeighted = (
+    stocks: Stock[],
+    annualBalance: number,
+    cadCurrencyWeight = 0,
+    usdCurrencyWeight = 0,
+    startTimestamp?: number
+) => {
+    const sortedArr = stocks.sort((a, b) => a.price - b.price);
+        
+    // Get the middle index
+    const middleIndex = Math.floor(sortedArr.length / 2);
+        
+    // If array length is odd, return the middle element
+    // If array length is even, return the average of the two middle elements
+    const medianStockPrice = sortedArr.length % 2 !== 0
+        ? sortedArr[middleIndex].price
+        : (sortedArr[middleIndex - 1].price + sortedArr[middleIndex].price) / 2
+
+    // TESTING
+    console.log("median stock price: ", medianStockPrice);
+
+    const stocksWithYieldWeights = stocks.map((stock) => {
+        return {
+            ...stock,
+            weight:
+                (stock.dividendYield || 0) *
+                ((stock.currency === "CAD"
+                    ? cadCurrencyWeight
+                    : usdCurrencyWeight) || 1) *
+                (medianStockPrice / stock.price)
+        };
+    });
+
+    return calculateDailyAmountWeighted(
+        stocksWithYieldWeights,
+        annualBalance,
+        startTimestamp
+    )
+}
+
 export {
     calculateDailyAmount,
     calculateDailyAmountWeighted,
     calculateDailyAmountYieldWeighted,
     calculateDailyAmountYieldAndCurrencyWeighted,
+    calculateDailyAmountYieldCurrencyMedianPriceWeighted
 };
