@@ -1,7 +1,5 @@
 import { parseArgs } from "./parse";
-import {
-    calculateDailyAmountYieldAndCurrencyWeighted,
-} from "./calculator";
+import { calculateDailyAmountYieldAndCurrencyWeighted } from "./calculator";
 import { writeToFileAsync } from "./write";
 import { readStocksFromFile } from "./read";
 

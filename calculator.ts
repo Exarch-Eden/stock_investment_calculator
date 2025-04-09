@@ -42,11 +42,15 @@ const calculateDailyAmountWeighted = (
     return sanitizedStocksArr.map((stock) => {
         return {
             ...stock,
-            investAmount: Number.parseFloat((
-                (annualBalance * stock.weight) /
+            investAmount: Number.parseFloat(
+                (
+                    (annualBalance * stock.weight) /
                     (sumStockWeight * numWorkDaysRemaining)
-            ).toFixed(2)),
-            investPercentage: Number.parseFloat((stock.weight / sumStockWeight).toFixed(2))
+                ).toFixed(2)
+            ),
+            investPercentage: Number.parseFloat(
+                (stock.weight / sumStockWeight).toFixed(2)
+            ),
         };
     });
 };
@@ -60,12 +64,16 @@ const calculateDailyAmountYieldWeighted = (
         return {
             ...stock,
             weight: stock.dividendYield,
-        }
-    })
+        };
+    });
 
     // NOTE: we are replacing all weight values for each stock with the dividend yield value
-    return calculateDailyAmountWeighted(stocksWithYieldWeights, annualBalance, startTimestamp)
-}
+    return calculateDailyAmountWeighted(
+        stocksWithYieldWeights,
+        annualBalance,
+        startTimestamp
+    );
+};
 
 const calculateDailyAmountYieldAndCurrencyWeighted = (
     stocks: Stock[],
@@ -77,11 +85,24 @@ const calculateDailyAmountYieldAndCurrencyWeighted = (
     const stocksWithYieldWeights = stocks.map((stock) => {
         return {
             ...stock,
-            weight: (stock.dividendYield || 0) * ((stock.currency === "CAD" ? cadCurrencyWeight : usdCurrencyWeight) || 1)
-        }
-    })
+            weight:
+                (stock.dividendYield || 0) *
+                ((stock.currency === "CAD"
+                    ? cadCurrencyWeight
+                    : usdCurrencyWeight) || 1),
+        };
+    });
 
-    return calculateDailyAmountWeighted(stocksWithYieldWeights, annualBalance, startTimestamp)
-}
+    return calculateDailyAmountWeighted(
+        stocksWithYieldWeights,
+        annualBalance,
+        startTimestamp
+    );
+};
 
-export { calculateDailyAmount, calculateDailyAmountWeighted, calculateDailyAmountYieldWeighted, calculateDailyAmountYieldAndCurrencyWeighted };
+export {
+    calculateDailyAmount,
+    calculateDailyAmountWeighted,
+    calculateDailyAmountYieldWeighted,
+    calculateDailyAmountYieldAndCurrencyWeighted,
+};
