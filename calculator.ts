@@ -37,13 +37,6 @@ const calculateDailyAmountWeighted = (
         .map((stock) => stock.weight)
         .reduce((sumWeight, curWeight) => sumWeight + curWeight);
 
-    // TESTING
-    console.log("sanitizedStocksArr:\n", sanitizedStocksArr);
-    // TESTING
-    // console.log("numStocks:\n", numStocks);
-    // TESTING
-    console.log("sumStockWeight:\n", sumStockWeight);
-
     const numWorkDaysRemaining = getRemainingWorkDaysAnnual(startTimestamp);
 
     return sanitizedStocksArr.map((stock) => {
