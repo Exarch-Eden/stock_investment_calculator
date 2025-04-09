@@ -7,6 +7,10 @@ const calculateDailyAmount = (numStocks: number, annualBalance: number, startTim
     return (annualBalance / (numStocks * numWorkDaysRemaining)).toFixed(2)
 }
 
+const calculateDailyAmountWeighted = (stocks: Stock[], annualBalance: number, startTimestamp?: number) => {
+    
+}
+
 export {
     calculateDailyAmount
 }
