@@ -46,6 +46,7 @@ const calculateDailyAmountWeighted = (
                 (annualBalance * stock.weight) /
                     (sumStockWeight * numWorkDaysRemaining)
             ).toFixed(2)),
+            investPercentage: Number.parseFloat((stock.weight / sumStockWeight).toFixed(2))
         };
     });
 };
