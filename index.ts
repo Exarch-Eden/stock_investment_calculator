@@ -1,10 +1,16 @@
 import { parseArgs } from "./parse";
-import { calculateDailyAmount } from "./calculator";
+import { calculateDailyAmount, calculateDailyAmountWeighted } from "./calculator";
 import { writeToFileAsync } from "./write";
+import { readStocksFromFile } from "./read";
 
 const { stocks, balance, timestamp } = parseArgs();
 
+// writeToFileAsync(
+//     "./result.txt",
+//     calculateDailyAmount(stocks, balance, timestamp)
+// );
+
 writeToFileAsync(
-    "./result.txt",
-    calculateDailyAmount(stocks, balance, timestamp)
-);
+    "./result.json",
+    JSON.stringify(calculateDailyAmountWeighted(readStocksFromFile("./input.txt"), balance, timestamp))
+)
