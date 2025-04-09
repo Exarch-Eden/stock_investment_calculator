@@ -1,8 +1,3 @@
-// const { MS_IN_DAY } = require("./constants")
-// const { writeToFileAsync } = require("./write")
-import { parseArgs } from "./parse";
-import { writeToFileAsync } from "./write"
-
 const calculateDailyAmount = (numStocks: number, annualBalance: number, startTimestamp?: number) => {
     const curDate = new Date()
 
@@ -29,7 +24,6 @@ const calculateDailyAmount = (numStocks: number, annualBalance: number, startTim
     return (annualBalance / (numStocks * numWorkDaysRemaining)).toFixed(2)
 }
 
-// NOTE: update these values to see proper reuslts
-const { stocks, balance, timestamp } = parseArgs()
-
-writeToFileAsync("./result.txt", calculateDailyAmount(stocks, balance, timestamp))
+export {
+    calculateDailyAmount
+}
