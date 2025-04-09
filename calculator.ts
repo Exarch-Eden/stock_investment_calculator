@@ -32,7 +32,7 @@ const calculateDailyAmountWeighted = (
     const sanitizedStocksArr = [...stockMap.values()].sort(
         (a, b) => b.dividendYield - a.dividendYield
     );
-    // const numStocks = sanitizedStocksArr.length;
+    
     const sumStockWeight = sanitizedStocksArr
         .map((stock) => stock.weight)
         .reduce((sumWeight, curWeight) => sumWeight + curWeight);
