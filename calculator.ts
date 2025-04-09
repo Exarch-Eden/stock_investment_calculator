@@ -1,5 +1,5 @@
 import { getRemainingWorkDaysAnnual } from "./date";
-import { Stock } from "./types";
+import { FinalizedDailyStockInvestment, Stock } from "./types";
 
 const calculateDailyAmount = (
     numStocks: number,
@@ -15,6 +15,43 @@ const calculateDailyAmountWeighted = (
     stocks: Stock[],
     annualBalance: number,
     startTimestamp?: number
-) => {};
+): FinalizedDailyStockInvestment[] => {
+    // prevents duplicates
+    const stockMap = new Map(
+        stocks.map((stock) => [
+            stock.ticker,
+            {
+                ...stock,
+                dividendYield: stock.dividendYield || 0,
+                weight: stock.weight || 1,
+            },
+        ])
+    );
 
-export { calculateDailyAmount };
+    // sorted by highest dividend yield
+    const sanitizedStocksArr = [...stockMap.values()].sort(
+        (a, b) => a.dividendYield - b.dividendYield
+    );
+    // const numStocks = sanitizedStocksArr.length;
+    const sumStockWeight = sanitizedStocksArr
+        .map((stock) => stock.weight)
+        .reduce((sumWeight, curWeight) => sumWeight + curWeight);
+
+    // TESTING
+    console.log("sanitizedStocksArr:\n", sanitizedStocksArr);
+    // TESTING
+    // console.log("numStocks:\n", numStocks);
+    // TESTING
+    console.log("sumStockWeight:\n", sumStockWeight);
+
+    const numWorkDaysRemaining = getRemainingWorkDaysAnnual(startTimestamp);
+
+    return sanitizedStocksArr.map(stock => {
+        return {
+            ...stock,
+            investAmount: Math.floor((annualBalance * stock.weight) / (sumStockWeight * numWorkDaysRemaining))
+        }
+    });
+};
+
+export { calculateDailyAmount, calculateDailyAmountWeighted };
