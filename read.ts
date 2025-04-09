@@ -28,6 +28,9 @@ const readStocksFromFile = (filePath: string): Stock[] => {
             if (typeof stock.price !== "number" || isNaN(stock.price)) {
                 throw new Error(`Stock at index ${index} has invalid price`);
             }
+            if (!stock.currency || (stock.currency !== "USD" && stock.currency !== "CAD")) {
+                throw new Error(`Stock at index ${index} has invalid currency`);
+            }
             if (
                 stock.dividendYield !== undefined &&
                 (typeof stock.dividendYield !== "number" ||
@@ -47,6 +50,7 @@ const readStocksFromFile = (filePath: string): Stock[] => {
             return {
                 ticker: stock.ticker,
                 price: stock.price,
+                currency: stock.currency,
                 dividendYield: stock.dividendYield,
                 weight: stock.weight,
             };
