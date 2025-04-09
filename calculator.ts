@@ -81,18 +81,6 @@ const calculateDailyAmountYieldAndCurrencyWeighted = (
         }
     })
 
-    // TESTING
-    console.log(stocksWithYieldWeights.map(stock => ({ ticker: stock.ticker, weight: stock.weight, originalWeight: stock.dividendYield })));
-
-    // // separates USD and CAD stocks
-    // const currencySplitStockMap = new Map<Stock["currency"], Stock[]>([["USD", []], ["CAD", []]])
-
-    // stocksWithYieldWeights.forEach(stock => {
-    //     const sameCurrencyStockArr = currencySplitStockMap.get(stock.currency)!
-
-    //     currencySplitStockMap.set(stock.currency, [...sameCurrencyStockArr, stock])
-    // })
-
     return calculateDailyAmountWeighted(stocksWithYieldWeights, annualBalance, startTimestamp)
 }
 
