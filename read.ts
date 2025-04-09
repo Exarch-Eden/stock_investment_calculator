@@ -1,0 +1,64 @@
+import { readFileSync } from "fs";
+import { Stock } from "./types";
+
+/**
+ * Reads a text file containing an array of Stock items in JSON format
+ * @param filePath - Path to the text file
+ * @returns Array of Stock objects
+ * @throws Error if file can't be read or content isn't valid
+ */
+const readStocksFromFile = (filePath: string): Stock[] => {
+    try {
+        // Read the file as text
+        const fileContent = readFileSync(filePath, "utf-8");
+
+        // Parse the text content as JSON
+        const parsedStocks = JSON.parse(fileContent);
+
+        // Validate the parsed content is an array
+        if (!Array.isArray(parsedStocks)) {
+            throw new Error("File content is not a valid array");
+        }
+
+        // Validate each item in the array conforms to the Stock interface
+        const stocks: Stock[] = parsedStocks.map((stock, index) => {
+            if (!stock.ticker || typeof stock.ticker !== "string") {
+                throw new Error(`Stock at index ${index} has invalid ticker`);
+            }
+            if (typeof stock.price !== "number" || isNaN(stock.price)) {
+                throw new Error(`Stock at index ${index} has invalid price`);
+            }
+            if (
+                stock.dividendYield !== undefined &&
+                (typeof stock.dividendYield !== "number" ||
+                    isNaN(stock.dividendYield))
+            ) {
+                throw new Error(
+                    `Stock at index ${index} has invalid dividendYield`
+                );
+            }
+            if (
+                stock.weight !== undefined &&
+                (typeof stock.weight !== "number" || isNaN(stock.weight))
+            ) {
+                throw new Error(`Stock at index ${index} has invalid weight`);
+            }
+
+            return {
+                ticker: stock.ticker,
+                price: stock.price,
+                dividendYield: stock.dividendYield,
+                weight: stock.weight,
+            };
+        });
+
+        return stocks;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(`Failed to read stocks file: ${error.message}`);
+        }
+        throw new Error("Failed to read stocks file");
+    }
+};
+
+export { readStocksFromFile };
