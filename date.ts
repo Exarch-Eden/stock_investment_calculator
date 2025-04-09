@@ -12,23 +12,14 @@ const getRemainingWorkDaysAnnual = (startTimestamp?: number) => {
         999
     ).getTime();
 
-    // TESTING
-    console.log("yearEndTimestamp: ", yearEndTimestamp);
-
     // timestamp difference between today and last day of the year
     const diffTimestamp =
         yearEndTimestamp - (startTimestamp || curDate.getTime());
 
     const diffDays = Math.floor(diffTimestamp / (3600 * 24 * 1000));
 
-    // TESTING
-    console.log("diffDays: ", diffDays);
-
     // does not account for holidays
     const numWorkDaysRemaining = Math.floor(diffDays * (5 / 7));
-
-    // TESTING
-    console.log("num work days remaining: ", numWorkDaysRemaining);
 
     return numWorkDaysRemaining;
 };

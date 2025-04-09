@@ -1,4 +1,3 @@
-// const fs = require("fs");
 import * as fs from "fs";
 
 // Writing to a file synchronously
@@ -28,8 +27,4 @@ const writeToFileAsync = (filePath: string, content: string): Promise<void> => {
     });
 };
 
-// module.exports = {
-//     writeToFileSync,
-//     writeToFileAsync
-// }
 export { writeToFileSync, writeToFileAsync };
