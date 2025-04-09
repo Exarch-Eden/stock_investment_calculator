@@ -1,8 +1,15 @@
 interface Stock {
-    // NOTE: the uuid
+    // the uuid
     ticker: string;
+    price: number;
+    dividendYield?: number;
     // NOTE: user-defined values
     weight?: number;
 }
 
-export { type Stock };
+// determined by the calculation
+interface FinalizedDailyStockInvestment extends Stock {
+    investAmount: number;
+}
+
+export { type Stock, type FinalizedDailyStockInvestment };
