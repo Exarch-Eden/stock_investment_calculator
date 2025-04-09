@@ -11,6 +11,8 @@ interface Stock {
 // determined by the calculation
 interface FinalizedDailyStockInvestment extends Stock {
     investAmount: number;
+    // relative to whole
+    investPercentage: number;
 }
 
 export { type Stock, type FinalizedDailyStockInvestment };
