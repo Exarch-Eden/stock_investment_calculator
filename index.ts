@@ -17,7 +17,7 @@ writeToFileAsync(
     "./result.json",
     JSON.stringify(
         calculateDailyAmountWeighted(
-            readStocksFromFile("./input.txt"),
+            readStocksFromFile("./input.json"),
             balance,
             timestamp
         )
