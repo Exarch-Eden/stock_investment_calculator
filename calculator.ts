@@ -46,11 +46,14 @@ const calculateDailyAmountWeighted = (
 
     const numWorkDaysRemaining = getRemainingWorkDaysAnnual(startTimestamp);
 
-    return sanitizedStocksArr.map(stock => {
+    return sanitizedStocksArr.map((stock) => {
         return {
             ...stock,
-            investAmount: Math.floor((annualBalance * stock.weight) / (sumStockWeight * numWorkDaysRemaining))
-        }
+            investAmount: Math.floor(
+                (annualBalance * stock.weight) /
+                    (sumStockWeight * numWorkDaysRemaining)
+            ),
+        };
     });
 };
 
