@@ -2,6 +2,7 @@ interface Stock {
     // the uuid
     ticker: string;
     price: number;
+    currency: "USD" | "CAD";
     dividendYield?: number;
     // NOTE: user-defined values
     weight?: number;
