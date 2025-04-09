@@ -50,4 +50,20 @@ const calculateDailyAmountWeighted = (
     });
 };
 
-export { calculateDailyAmount, calculateDailyAmountWeighted };
+const calculateDailyAmountYieldWeighted = (
+    stocks: Stock[],
+    annualBalance: number,
+    startTimestamp?: number
+): FinalizedDailyStockInvestment[] => {
+    const stocksWithYieldWeights = stocks.map((stock) => {
+        return {
+            ...stock,
+            weight: stock.dividendYield,
+        }
+    })
+
+    // NOTE: we are replacing all weight values for each stock with the dividend yield value
+    return calculateDailyAmountWeighted(stocksWithYieldWeights, annualBalance, startTimestamp)
+}
+
+export { calculateDailyAmount, calculateDailyAmountWeighted, calculateDailyAmountYieldWeighted };
