@@ -1,10 +1,8 @@
 interface Stock {
     // NOTE: the uuid
-    ticker: string,
+    ticker: string;
     // NOTE: user-defined values
-    weight?: number
+    weight?: number;
 }
 
-export {
-    type Stock
-}
+export { type Stock };

@@ -4,23 +4,21 @@ const parseArgs = () => {
     let stocks = 0;
     let balance = 0;
     let timestamp = 0;
-    
+
     for (let i = 0; i < args.length; i++) {
-        if (args[i] === '--stocks' || args[i] === '-s') {
+        if (args[i] === "--stocks" || args[i] === "-s") {
             stocks = Number(args[i + 1]);
             i++;
-        } else if (args[i] === '--balance' || args[i] === '-b') {
+        } else if (args[i] === "--balance" || args[i] === "-b") {
             balance = Number(args[i + 1]);
             i++;
-        } else if (args[i] === '--timestamp' || args[i] === '-t') {
+        } else if (args[i] === "--timestamp" || args[i] === "-t") {
             timestamp = Number(args[i + 1]);
             i++;
         }
     }
-    
-    return { stocks, balance, timestamp };
-}
 
-export {
-    parseArgs
-}
+    return { stocks, balance, timestamp };
+};
+
+export { parseArgs };

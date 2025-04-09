@@ -1,5 +1,5 @@
 // const fs = require("fs");
-import * as fs from "fs"
+import * as fs from "fs";
 
 // Writing to a file synchronously
 const writeToFileSync = (filePath: string, content: string): void => {
@@ -32,7 +32,4 @@ const writeToFileAsync = (filePath: string, content: string): Promise<void> => {
 //     writeToFileSync,
 //     writeToFileAsync
 // }
-export {
-    writeToFileSync,
-    writeToFileAsync
-}
+export { writeToFileSync, writeToFileAsync };
