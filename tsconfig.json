@@ -6,7 +6,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "jsx": "react-jsx",  // Add this line for JSX support
+    "lib": ["dom", "dom.iterable", "esnext"],  // Add these for browser APIs
+    "moduleResolution": "node"  // Add this for module resolution
   },
   "include": ["src", "**/*.ts", "**/*.tsx"]
 }
