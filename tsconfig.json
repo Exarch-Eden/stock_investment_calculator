@@ -7,9 +7,32 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "jsx": "react-jsx",  // Add this line for JSX support
-    "lib": ["dom", "dom.iterable", "esnext"],  // Add these for browser APIs
-    "moduleResolution": "node"  // Add this for module resolution
+    "jsx": "preserve", // Add this line for JSX support
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ], // Add these for browser APIs
+    "moduleResolution": "node" // Add this for module resolution
+    ,
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
