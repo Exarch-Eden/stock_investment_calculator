@@ -1,3 +1,5 @@
+node_modules/
+
 result.txt
 input.txt
 result.json
