@@ -7,13 +7,13 @@ import { Stock } from "./types";
  * @returns Array of Stock objects
  * @throws Error if file can't be read or content isn't valid
  */
-const readStocksFromFile = (filePath: string): { stocks: Stock[], balance: number, timestamp: number, cadWeight?: number, usdWeight?: number } => {
+const readStocksFromFile = (filePath: string): { stocks: Stock[], balance: number, timestamp: number, usdToCadCurrencyConversion: number, cadWeight?: number, usdWeight?: number } => {
     try {
         // Read the file as text
         const fileContent = readFileSync(filePath, "utf-8");
 
         // Parse the text content as JSON
-        const { stocks: parsedStocks, balance, timestamp, cadWeight, usdWeight } = JSON.parse(fileContent);
+        const { stocks: parsedStocks, balance, timestamp, cadWeight, usdWeight, usdToCadCurrencyConversion } = JSON.parse(fileContent);
 
         // Validate the parsed content is an array
         if (!Array.isArray(parsedStocks)) {
@@ -56,7 +56,7 @@ const readStocksFromFile = (filePath: string): { stocks: Stock[], balance: numbe
             };
         });
 
-        return { stocks: validatedStocks, balance, timestamp, cadWeight, usdWeight };
+        return { stocks: validatedStocks, balance, timestamp, cadWeight, usdWeight, usdToCadCurrencyConversion };
     } catch (error) {
         if (error instanceof Error) {
             throw new Error(`Failed to read stocks file: ${error.message}`);

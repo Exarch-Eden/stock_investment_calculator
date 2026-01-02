@@ -4,7 +4,7 @@ import { writeToFileAsync } from "./write";
 import { readStocksFromFile } from "./read";
 
 // const { balance, timestamp, cadWeight, usdWeight } = parseArgs();
-const { stocks, balance, timestamp, cadWeight, usdWeight } = readStocksFromFile("./input.json")
+const { stocks, balance, timestamp, cadWeight, usdWeight, usdToCadCurrencyConversion } = readStocksFromFile("./input.json")
 
 writeToFileAsync(
     "./result.json",
@@ -12,6 +12,7 @@ writeToFileAsync(
         calculateDailyAmountYieldCurrencyMedianPriceWeighted(
             stocks,
             balance,
+            usdToCadCurrencyConversion,
             cadWeight,
             usdWeight,
             timestamp

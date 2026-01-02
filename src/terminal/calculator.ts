@@ -103,25 +103,36 @@ const calculateDailyAmountYieldAndCurrencyWeighted = (
 const calculateDailyAmountYieldCurrencyMedianPriceWeighted = (
     stocks: Stock[],
     annualBalance: number,
+    usdToCadCurrencyConversion: number,
     cadCurrencyWeight = 0,
     usdCurrencyWeight = 0,
     startTimestamp?: number
 ) => {
-    const sortedArr = stocks.sort((a, b) => a.price - b.price);
-        
+    const stocksArrWithCadPricing = stocks
+        .map(stock => {
+            return {
+                ...stock,
+                cadConvertedPrice: stock.currency === "USD"
+                    ? stock.price * (usdToCadCurrencyConversion || 1)
+                    : stock.price
+            }
+        });
+
+    const sortedArrWithCadPricing = stocksArrWithCadPricing.sort((a, b) => a.cadConvertedPrice - b.cadConvertedPrice);
+
     // Get the middle index
-    const middleIndex = Math.floor(sortedArr.length / 2);
-        
+    const middleIndex = Math.floor(sortedArrWithCadPricing.length / 2);
+
     // If array length is odd, return the middle element
     // If array length is even, return the average of the two middle elements
-    const medianStockPrice = sortedArr.length % 2 !== 0
-        ? sortedArr[middleIndex].price
-        : (sortedArr[middleIndex - 1].price + sortedArr[middleIndex].price) / 2
+    const medianStockPrice = sortedArrWithCadPricing.length % 2 !== 0
+        ? sortedArrWithCadPricing[middleIndex].cadConvertedPrice
+        : (sortedArrWithCadPricing[middleIndex - 1].cadConvertedPrice + sortedArrWithCadPricing[middleIndex].cadConvertedPrice) / 2
 
     // TESTING
     console.log("median stock price: ", medianStockPrice);
 
-    const stocksWithYieldWeights = stocks.map((stock) => {
+    const stocksWithYieldWeights = stocksArrWithCadPricing.map((stock) => {
         return {
             ...stock,
             weight:
@@ -129,7 +140,7 @@ const calculateDailyAmountYieldCurrencyMedianPriceWeighted = (
                 ((stock.currency === "CAD"
                     ? cadCurrencyWeight
                     : usdCurrencyWeight) || 1) *
-                (medianStockPrice / stock.price)
+                (medianStockPrice / stock.cadConvertedPrice)
         };
     });
 
